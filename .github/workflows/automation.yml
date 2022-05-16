@@ -1,0 +1,16 @@
+name: Docker Image CI
+
+on: push
+
+jobs:
+  build-container:
+    name: Build Docker container image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish to Docker Hub
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USENAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: buraketmen/influxdb2-s3-backup
+          tags: latest, ${{ github.run_number }}
