@@ -1,4 +1,4 @@
-FROM influxdb:2.0.7
+FROM influxdb:2.2.0
 
 RUN apt update -y && apt install awscli cron -y
 
