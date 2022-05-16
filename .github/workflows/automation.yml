@@ -7,10 +7,18 @@ jobs:
     name: Build Docker container image
     runs-on: ubuntu-latest
     steps:
-      - name: Publish to Docker Hub
-        uses: docker/build-push-action@v2
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_USENAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: buraketmen/influxdb2-s3-backup
-          tags: latest, ${{ github.run_number }}
+    
+      - name: Build and push to Docker Hub
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: buraketmen/influxdb2-s3-backup:latest, buraketmen/influxdb2-s3-backup:${{ github.run_number }}
